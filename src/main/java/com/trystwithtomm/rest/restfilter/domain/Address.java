@@ -2,7 +2,6 @@ package com.trystwithtomm.rest.restfilter.domain;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 
-@JsonFilter("user")
 public class Address {
 
     private String address1;

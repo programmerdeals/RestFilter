@@ -16,9 +16,11 @@ public class UserService {
         List<User> users = new ArrayList<>();
         DataFactory df = new DataFactory();
         df.randomize(new Random().nextInt());
-        User user = new User();
-        Address address = new Address();
+        User user;
+        Address address;
         for (int i = 0; i < 5; i++) {
+            user = new User();
+            address = new Address();
             user.setFirstName(df.getFirstName());
             user.setLastName(df.getLastName());
             address.setAddress1(df.getAddress());

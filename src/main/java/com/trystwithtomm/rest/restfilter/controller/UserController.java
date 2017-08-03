@@ -15,15 +15,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
 
+    private final UserService userService;
+
     @Autowired
-    public UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping
     public String getUsers(@RequestParam String selector) throws JsonProcessingException {
@@ -37,12 +40,11 @@ public class UserController {
         final SimpleFilterProvider filterProvider = new SimpleFilterProvider();
 
         mappingJacksonValue.setFilters(filterProvider.addFilter("user",
-                SimpleBeanPropertyFilter.filterOutAllExcept((new HashSet<>(Arrays
-                        .asList(selectors.toArray(selectorsArr)))))));
+                SimpleBeanPropertyFilter.filterOutAllExcept(selectors.toArray(selectorsArr)) ));
         final ObjectMapper mapper = new ObjectMapper();
         mapper.setFilterProvider(filterProvider);
 
         User user = new User();
-        return mapper.writer().writeValueAsString(userList.get(0));
+        return mapper.writer().writeValueAsString(userList);
     }
 }
